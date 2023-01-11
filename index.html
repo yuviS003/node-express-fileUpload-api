@@ -32,6 +32,10 @@
 <body>
     <h1>Node.js File Uploader</h1>
     <form id="uploadForm">
+        <label for="heading">Heading</label>
+        <input type="text" name="" id="heading" />
+        <label for="subheading">Subheading</label>
+        <input type="text" name="" id="subheading" />
         <label for="myFiles">File</label>
         <input type="file" name="" id="myFiles" accept="image/*" multiple />
         <button type="submit">Submit</button>
@@ -40,13 +44,21 @@
     <h3></h3>
     <script>
         const form = document.getElementById("uploadForm");
-        const sendFiles = async () => {
+        const heading = document.getElementById("heading")
+        const subheading = document.getElementById("subheading")
+        const sendFiles = async (heading, subheading) => {
             // Object
             const myFiles = document.getElementById("myFiles").files;
             const formData = new FormData();
 
             Object.keys(myFiles).forEach(key => {
                 formData.append(myFiles.item(key).name, myFiles.item(key))
+            })
+            formData.append('heading', heading)
+            formData.append('subheading', subheading)
+
+            formData.forEach((value, key) => {
+                console.log(value, key)
             })
 
             const response = await fetch('http://localhost:3500/upload', {
@@ -67,7 +79,7 @@
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            sendFiles();
+            sendFiles(heading.value, subheading.value);
         })
     </script>
 </body>

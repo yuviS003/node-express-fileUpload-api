@@ -23,6 +23,8 @@ app.post('/upload',
     (req, res) => {
         const files = req.files
         console.log(files);
+        console.log('heading', req.body.heading)
+        console.log('subheading', req.body.subheading)
         Object.keys(files).forEach(key => {
             const filePath = path.join(__dirname, 'files', `${uuidv4()}_${files[key].name}`);
             files[key].mv(filePath, (err) => {
